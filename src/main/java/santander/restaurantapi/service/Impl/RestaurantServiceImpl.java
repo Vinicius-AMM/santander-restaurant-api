@@ -57,13 +57,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void deleteById(Long id) {
-        validateChangeableId(id, "deleted");
+        this.validateChangeableId(id, "deleted");
         restaurantRepository.deleteById(id);
     }
-
-    private void validateChangeableId(Long id, String operation){
-        if(UNCHANGEABLE_RESTAURANT_ID.equals(id)){
-            throw new BusinessException(String.format("The id %d is unchangeable for %s operation".formatted(UNCHANGEABLE_RESTAURANT_ID, operation)));
+    private void validateChangeableId(Long id, String operation) {
+        if (UNCHANGEABLE_RESTAURANT_ID.equals(id)) {
+            throw new BusinessException("User with ID %d can not be %s.".formatted(UNCHANGEABLE_RESTAURANT_ID, operation));
         }
     }
 }
