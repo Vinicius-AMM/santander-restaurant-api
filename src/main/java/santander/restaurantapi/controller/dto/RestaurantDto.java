@@ -19,6 +19,7 @@ public record RestaurantDto(Long id, String name, String urlPicture, Address add
 
     public Restaurant toModel(){
         Restaurant model = new Restaurant();
+        model.setId(id);
         model.setName(name);
         model.setUrlPicture(urlPicture);
         model.setAddress(address);
