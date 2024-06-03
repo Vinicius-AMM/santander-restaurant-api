@@ -15,6 +15,7 @@ public record AddressDto(Long id, String cep, String city, String state, String 
 
     public Address toModel(){
         Address model = new Address();
+        model.setId(id);
         model.setCep(cep);
         model.setCity(city);
         model.setState(state);
