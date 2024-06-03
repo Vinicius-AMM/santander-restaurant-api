@@ -2,7 +2,6 @@ package santander.restaurantapi.service.Impl;
 
 import org.springframework.stereotype.Service;
 import santander.restaurantapi.domain.model.Restaurant;
-import santander.restaurantapi.domain.repository.ProductRepository;
 import santander.restaurantapi.domain.repository.RestaurantRepository;
 import santander.restaurantapi.service.RestaurantService;
 import santander.restaurantapi.service.exception.BusinessException;
@@ -43,10 +42,17 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Restaurant update(Long id, Restaurant restaurantToUpdate) {
         validateChangeableId(id, "updated");
-        if(!restaurantRepository.findById(id).equals(restaurantToUpdate.getId())){
+        Restaurant dbRestaurant = this.findById(id);
+        if(!dbRestaurant.getId().equals(restaurantToUpdate.getId())){
             throw new BusinessException("Update IDs must be the same!");
         }
-        return restaurantRepository.save(restaurantToUpdate);
+        dbRestaurant.setName(restaurantToUpdate.getName());
+        dbRestaurant.setUrlPicture(restaurantToUpdate.getUrlPicture());
+        dbRestaurant.setAddress(restaurantToUpdate.getAddress());
+        dbRestaurant.setOperatingDays(restaurantToUpdate.getOperatingDays());
+        dbRestaurant.setProducts(restaurantToUpdate.getProducts());
+
+        return restaurantRepository.save(dbRestaurant);
     }
 
     @Override
